@@ -13,7 +13,7 @@ namespace parserRead.Model
         public string Name { get; set; }
         public long Damage { get; set; } 
         public string DPS { get; set; }
-        public string Instance { get; set; }
+
         
     }
 }

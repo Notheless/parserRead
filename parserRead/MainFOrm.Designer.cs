@@ -35,12 +35,14 @@ namespace parserRead
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.readableResultLogBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.damageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dPSDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.instanceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.readableResultLogBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.readableResultLogBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -49,23 +51,23 @@ namespace parserRead
             // 
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idDataGridViewTextBoxColumn,
             this.nameDataGridViewTextBoxColumn,
             this.damageDataGridViewTextBoxColumn,
-            this.dPSDataGridViewTextBoxColumn,
-            this.instanceDataGridViewTextBoxColumn});
+            this.dPSDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.readableResultLogBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(12, 45);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(737, 256);
+            this.dataGridView1.Size = new System.Drawing.Size(776, 256);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 12);
+            this.button1.Location = new System.Drawing.Point(12, 14);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 1;
@@ -82,9 +84,24 @@ namespace parserRead
             this.label1.TabIndex = 2;
             this.label1.Text = "label1";
             // 
-            // readableResultLogBindingSource
+            // textBox1
             // 
-            this.readableResultLogBindingSource.DataSource = typeof(parserRead.Model.ReadableResultLog);
+            this.textBox1.Location = new System.Drawing.Point(93, 14);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(614, 20);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(713, 12);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -110,17 +127,21 @@ namespace parserRead
             this.dPSDataGridViewTextBoxColumn.HeaderText = "DPS";
             this.dPSDataGridViewTextBoxColumn.Name = "dPSDataGridViewTextBoxColumn";
             // 
-            // instanceDataGridViewTextBoxColumn
+            // readableResultLogBindingSource
             // 
-            this.instanceDataGridViewTextBoxColumn.DataPropertyName = "Instance";
-            this.instanceDataGridViewTextBoxColumn.HeaderText = "Instance";
-            this.instanceDataGridViewTextBoxColumn.Name = "instanceDataGridViewTextBoxColumn";
+            this.readableResultLogBindingSource.DataSource = typeof(parserRead.Model.ReadableResultLog);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
@@ -145,6 +166,9 @@ namespace parserRead
         private System.Windows.Forms.DataGridViewTextBoxColumn dPSDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn instanceDataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource readableResultLogBindingSource;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
