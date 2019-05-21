@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,8 @@ namespace parserRead.Model
         public string Id { get; set; }
         public string Name { get; set; }
         public long Damage { get; set; } 
+        public string DPS { get; set; }
+        public string Instance { get; set; }
+        
     }
 }

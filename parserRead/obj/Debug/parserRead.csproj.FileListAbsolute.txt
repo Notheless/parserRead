@@ -1,0 +1,17 @@
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\parserRead.exe.config
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\parserRead.exe
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\parserRead.pdb
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.csprojAssemblyReference.cache
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.MainForm.resources
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.Properties.Resources.resources
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.csproj.GenerateResource.cache
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.csproj.CoreCompileInputs.cache
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.csproj.CopyComplete
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.exe
+C:\Users\Alfian\source\repos\parserRead\parserRead\obj\Debug\parserRead.pdb
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\CsvHelper.dll
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\System.ValueTuple.dll
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\CsvHelper.xml
+C:\Users\Alfian\source\repos\parserRead\parserRead\bin\Debug\System.ValueTuple.xml
