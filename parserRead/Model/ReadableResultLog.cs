@@ -23,7 +23,7 @@ namespace parserRead.Model
         public DateTime LastHit { get; set; }
         public TimeSpan TimeLenght { get
             {
-                return (Start - LastHit);
+                return (LastHit- Start);
             }
         }
         public List<playersSkillLog> PlayersSkill { get; set; }

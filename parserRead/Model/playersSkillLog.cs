@@ -9,5 +9,6 @@ namespace parserRead.Model
     class playersSkillLog : SkillMappingModel
     {
         public double Damage { get; set; }
+        public long Hit { get; set; }
     }
 }

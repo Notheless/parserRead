@@ -67,14 +67,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parserRead.exe" size="290760">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parserRead.exe" size="293320">
       <assemblyIdentity name="parserRead" version="1.0.0.0" publicKeyToken="6B172DDFEDB4BE7D" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>c6FyGxZvhtyuyldob6eLX/rz+1fTjlOAXQOljzSmsLQ=</dsig:DigestValue>
+        <dsig:DigestValue>eG6SZXqn15qITKXn8YhdBy3DFXhz1VTy93mjuKU9OUI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
