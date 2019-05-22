@@ -12,6 +12,7 @@ namespace parserRead.Model
         public string Heal { get; set; }
         public string DPS { get; set; }
         public string Damage { get; set; }
+        public string RecievedDamage { get; set; }
         public string CritRate { get; set; }
         public string JARate { get; set; }
         public string MainSkill { get; set; }

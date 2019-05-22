@@ -14,7 +14,6 @@ using CsvHelper;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Net;
-using MoreLinq;
 
 namespace parserRead
 {
@@ -124,7 +123,8 @@ namespace parserRead
             try
             {
                 long newIndicator;
-                List<CSVParseModel> parseModels = new List<CSVParseModel>();
+                List<CSVParseModel> PlayerAttack = new List<CSVParseModel>();
+                List<CSVParseModel> PlayerRecieve = new List<CSVParseModel>();
                 TextReader reader;
                 while (true)
                 {
@@ -137,19 +137,28 @@ namespace parserRead
                         CsvReaderP.Configuration.PrepareHeaderForMatch = (string header, int index) => Regex.Replace(header, @"\s", string.Empty);
                         CsvReaderP.Read();
                         CsvReaderP.ReadHeader();
-                        parseModels = CsvReaderP.GetRecords<CSVParseModel>()
+                        PlayerAttack = CsvReaderP.GetRecords<CSVParseModel>()
                             .Where(x => 
                                 int.Parse(x.sourceID) > 100000 &&
                                 !IgnoreId.Any(ignore=>string.Compare(ignore,x.targetID)==0)
                                 )
                             .ToList();
-                        newIndicator = parseModels.LongCount();
+                        PlayerRecieve = CsvReaderP.GetRecords<CSVParseModel>()
+                            .Where(x =>
+                                int.Parse(x.targetID) > 100000 &&
+                                int.Parse(x.damage) > 0 &&
+                                !IgnoreId.Any(ignore => string.Compare(ignore, x.targetID) == 0) 
+                                )
+                            .ToList();
+
+                        newIndicator = PlayerAttack.LongCount();
                         if (PosisitionIndicator == 0) PosisitionIndicator = newIndicator;
                         
                     }
+
                     int difference = (int)(newIndicator - PosisitionIndicator);
-                    parseModels = parseModels.GetRange((int)PosisitionIndicator, difference).ToList() ;
-                    foreach(var data in parseModels)
+                    PlayerAttack = PlayerAttack.GetRange((int)PosisitionIndicator, difference).ToList() ;
+                    foreach(var data in PlayerAttack)
                     {
                         if(!ReadableResult.Any(player => string.Compare( player.Id,data.sourceID)==0))
                         {
@@ -159,6 +168,7 @@ namespace parserRead
                                 Name = data.sourceName,
                                 DPS = 0.0,
                                 Damage = 0,
+                                RecievedDamage =0,
                                 Heal = 0,
                                 NumberOfCrit = 0,
                                 NumberOfHits = 0,
@@ -203,7 +213,45 @@ namespace parserRead
                             ReadableResult.Add(UpdateData);
                         }
                     }
-                    foreach(var data in ReadableResult)
+                    foreach (var data in PlayerRecieve)
+                    {
+                        if (!ReadableResult.Any(player => string.Compare(player.Id, data.targetID) == 0))
+                        {
+                            var newData = new ReadableResultLog()
+                            {
+                                Id = data.sourceID,
+                                Name = data.sourceName,
+                                DPS = 0.0,
+                                Damage = 0,
+                                RecievedDamage = 0,
+                                Heal = 0,
+                                NumberOfCrit = 0,
+                                NumberOfHits = 0,
+                                NumberOfJA = 0,
+                                PlayersSkill = new List<playersSkillLog>(),
+                                Start = DateTime.Now,
+                                LastHit = DateTime.Now
+                            };
+                            ReadableResult.Add(newData);
+                        }
+                        var UpdateData = ReadableResult.Where(player => string.Compare(player.Id, data.targetID) == 0).First();
+
+                        if (UpdateData != null)
+                        {
+                            ReadableResult.Remove(UpdateData);
+
+                            if (double.Parse(data.damage) > 0)
+                            {
+
+                                UpdateData.RecievedDamage += double.Parse(data.damage);
+
+                            }
+
+
+                            ReadableResult.Add(UpdateData);
+                        }
+                    }
+                    foreach (var data in ReadableResult)
                     {
                         data.LastHit = DateTime.Now;
                         data.DPS = (data.Damage / data.TimeLenght.TotalSeconds)/1000;
@@ -246,6 +294,7 @@ namespace parserRead
                 {
                     Name = data.Name,
                     Damage = (data.Damage).ToString(),
+                    RecievedDamage = data.RecievedDamage.ToString(),
                     Heal = data.Heal.ToString(),
                     DPS = data.DPS.ToString() + "K",
                     CritRate = (100 * data.NumberOfCrit / data.NumberOfHits).ToString() + "%",

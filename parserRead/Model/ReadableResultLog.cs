@@ -13,6 +13,7 @@ namespace parserRead.Model
         public string Name { get; set; }
         public int NumberOfHits { get; set; }
         public double Damage { get; set; }
+        public double RecievedDamage { get; set; }
         public double Heal { get; set; }
         public double DPS { get; set; }
         public int NumberOfCrit { get; set; }

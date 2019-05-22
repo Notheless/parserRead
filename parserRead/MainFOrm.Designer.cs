@@ -58,7 +58,7 @@ namespace parserRead
             this.dPSDataGridViewTextBoxColumn});
             this.dataGridView1.Location = new System.Drawing.Point(12, 45);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(776, 256);
+            this.dataGridView1.Size = new System.Drawing.Size(760, 256);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -111,13 +111,13 @@ namespace parserRead
             this.textBox1.Location = new System.Drawing.Point(93, 14);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(614, 20);
+            this.textBox1.Size = new System.Drawing.Size(598, 20);
             this.textBox1.TabIndex = 3;
             this.textBox1.TextChanged += new System.EventHandler(this.TextBox1_TextChanged);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(713, 12);
+            this.button2.Location = new System.Drawing.Point(697, 11);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 4;
@@ -131,7 +131,7 @@ namespace parserRead
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(713, 307);
+            this.button3.Location = new System.Drawing.Point(697, 307);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 42);
             this.button3.TabIndex = 5;
@@ -141,17 +141,19 @@ namespace parserRead
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(529, 307);
+            this.textBox2.Location = new System.Drawing.Point(374, 307);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(178, 131);
+            this.textBox2.ReadOnly = true;
+            this.textBox2.Size = new System.Drawing.Size(317, 131);
             this.textBox2.TabIndex = 6;
+            this.textBox2.WordWrap = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
