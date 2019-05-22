@@ -19,3 +19,6 @@ C:\Users\p\Source\Repos\parserRead\parserRead\obj\Release\parserRead.csproj.Copy
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Release\parserRead.exe
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Release\parserRead.pdb
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Release\parserRead.csprojAssemblyReference.cache
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Release\MoreLinq.dll
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Release\MoreLinq.pdb
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Release\MoreLinq.xml

@@ -36,3 +36,6 @@ C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\parserRead.exe.manifest
 C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\parserRead.application
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.exe.manifest
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.application
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\MoreLinq.dll
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\MoreLinq.pdb
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\MoreLinq.xml

@@ -338,9 +338,12 @@ namespace parserRead
             if (File.Exists(AppContext.BaseDirectory + "skills.csv"))
             {
 
-                using (reader = new StreamReader(path))
+                using (reader = new StreamReader(AppContext.BaseDirectory + "skills.csv"))
                 {
                     var CsvReaderP = new CsvReader(reader);
+                    CsvReaderP.Configuration.Delimiter = ",";
+                    CsvReaderP.Configuration.IgnoreQuotes = true;
+                    CsvReaderP.Configuration.BadDataFound = x => { textBox2.AppendText(x.RawRecord); };
                     CsvReaderP.Read();
                     CsvReaderP.ReadHeader();
                     skillMap = CsvReaderP.GetRecords<SkillMappingModel>().ToList();

@@ -54,6 +54,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MoreLinq.dll" size="262144">
+      <assemblyIdentity name="MoreLinq" version="3.1.1.0" publicKeyToken="384D532D7E88985D" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>XDAk5EMpgHleWNdaXLaRCYLqPMy6UHKz3p8UeBCBE48=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Newtonsoft.Json.dll" size="675752">
       <assemblyIdentity name="Newtonsoft.Json" version="12.0.0.0" publicKeyToken="30AD4FE6B2A6AEED" language="neutral" processorArchitecture="msil" />
       <hash>
@@ -66,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parserRead.exe" size="22984">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="parserRead.exe" size="25544">
       <assemblyIdentity name="parserRead" version="1.0.0.0" publicKeyToken="6B172DDFEDB4BE7D" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>p1IgZayaWIdYUJinr+jfTwmnXxPd1HL3sneNvwzddc8=</dsig:DigestValue>
+        <dsig:DigestValue>L2wV7T9rGLWqHvuWukB/K8zcFXIEPoV2SUVQ3xl/q6M=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
