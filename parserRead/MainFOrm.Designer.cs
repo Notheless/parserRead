@@ -31,21 +31,19 @@ namespace parserRead
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.damageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dPSDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.readableResultLogBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dPSDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.damageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.readableResultLogBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -63,6 +61,30 @@ namespace parserRead
             this.dataGridView1.Size = new System.Drawing.Size(776, 256);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // damageDataGridViewTextBoxColumn
+            // 
+            this.damageDataGridViewTextBoxColumn.DataPropertyName = "Damage";
+            this.damageDataGridViewTextBoxColumn.HeaderText = "Damage";
+            this.damageDataGridViewTextBoxColumn.Name = "damageDataGridViewTextBoxColumn";
+            // 
+            // dPSDataGridViewTextBoxColumn
+            // 
+            this.dPSDataGridViewTextBoxColumn.DataPropertyName = "DPS";
+            this.dPSDataGridViewTextBoxColumn.HeaderText = "DPS";
+            this.dPSDataGridViewTextBoxColumn.Name = "dPSDataGridViewTextBoxColumn";
             // 
             // button1
             // 
@@ -106,34 +128,6 @@ namespace parserRead
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // readableResultLogBindingSource
-            // 
-            this.readableResultLogBindingSource.DataSource = typeof(parserRead.Model.ReadableResultLog);
-            // 
-            // dPSDataGridViewTextBoxColumn
-            // 
-            this.dPSDataGridViewTextBoxColumn.DataPropertyName = "DPS";
-            this.dPSDataGridViewTextBoxColumn.HeaderText = "DPS";
-            this.dPSDataGridViewTextBoxColumn.Name = "dPSDataGridViewTextBoxColumn";
-            // 
-            // damageDataGridViewTextBoxColumn
-            // 
-            this.damageDataGridViewTextBoxColumn.DataPropertyName = "Damage";
-            this.damageDataGridViewTextBoxColumn.HeaderText = "Damage";
-            this.damageDataGridViewTextBoxColumn.Name = "damageDataGridViewTextBoxColumn";
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            // 
             // button3
             // 
             this.button3.Location = new System.Drawing.Point(713, 323);
@@ -144,11 +138,22 @@ namespace parserRead
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(529, 333);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 6;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.Button4_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.textBox1);
@@ -159,7 +164,6 @@ namespace parserRead
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.readableResultLogBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,8 +182,8 @@ namespace parserRead
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn damageDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dPSDataGridViewTextBoxColumn;
-        private System.Windows.Forms.BindingSource readableResultLogBindingSource;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
 

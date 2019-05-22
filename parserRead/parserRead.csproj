@@ -63,6 +63,7 @@
     </Compile>
     <Compile Include="Model\ConfigurationFile.cs" />
     <Compile Include="Model\CSVParseModel.cs" />
+    <Compile Include="Model\playersSkillLog.cs" />
     <Compile Include="Model\ReadableResultLog.cs" />
     <Compile Include="Model\SkillMappingModel.cs" />
     <Compile Include="Program.cs" />

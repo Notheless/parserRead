@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\parserRead"
+    "\\parserRead",
+    "\\parserRead\\Model"
   ],
   "SelectedNode": "\\parserRead\\MainForm.cs",
   "PreviewInSolutionExplorer": false

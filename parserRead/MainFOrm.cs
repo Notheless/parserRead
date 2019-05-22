@@ -30,8 +30,10 @@ namespace parserRead
         private long LastTIme;
         private long Lenght;
         private TimeSpan LenghtTime;
-        private long latestInstance;
+        private long LatestInstance;
+        private long PosisitionIndicator;
         private bool bgrun;
+        private List<string> IgnoreId;
 
         private string filetarget;
         private string path = AppContext.BaseDirectory + "src.csv";
@@ -42,6 +44,13 @@ namespace parserRead
 
         private void LoadConfig()
         {
+            //Ignore certain enemies as target
+            IgnoreId = new List<string>()
+            {
+                "401",
+            };
+
+
             bgrun = false;
             ReadableResult = new List<ReadableResultLog>();
             bool AllFilled = true;
@@ -122,8 +131,9 @@ namespace parserRead
                 if (bgrun) throw new Exception(" Already running");
 
                 if(!File.Exists(filetarget))OpenFile();
-
                 File.Copy(filetarget, path, true);
+
+                label1.Invoke(new Action(() => { label1.Text = "BBB"; }));
                 var bgw = new BackgroundWorker();
                 bgrun = true;
                 bgw.DoWork += (_, __) =>
@@ -140,12 +150,13 @@ namespace parserRead
             label1.Invoke(new Action(() => { label1.Text = "AAAA"; }));
             try
             {
+                long newIndicator;
+                List<CSVParseModel> parseModels = new List<CSVParseModel>();
+                TextReader reader;
                 while (true)
                 {
 
                     File.Copy(filetarget, path, true);
-                    List<CSVParseModel> parseModels = new List<CSVParseModel>();
-                    TextReader reader;
 
                     using (reader = new StreamReader(path))
                     {
@@ -154,66 +165,83 @@ namespace parserRead
                         CsvReaderP.Read();
                         CsvReaderP.ReadHeader();
                         parseModels = CsvReaderP.GetRecords<CSVParseModel>()
-                            .OrderBy(x => x.timestamp)
-                            .Where(x => (int.Parse(x.sourceID) > 100000 && int.Parse(x.damage) > 0))
+                            .Where(x => 
+                                int.Parse(x.sourceID) > 100000 &&
+                                !IgnoreId.Any(ignore=>string.Compare(ignore,x.targetID)==0)
+                                )
                             .ToList();
-
+                        newIndicator = parseModels.LongCount();
+                        if (PosisitionIndicator == 0) PosisitionIndicator = newIndicator;
+                        
                     }
-
-                    try
+                    int difference = (int)(newIndicator - PosisitionIndicator);
+                    parseModels = parseModels.GetRange((int)PosisitionIndicator, difference).ToList() ;
+                    foreach(var data in parseModels)
                     {
-                        LastTIme = int.Parse(parseModels.Last().timestamp);
-                        if (StartTIme == 0) StartTIme = LastTIme;
-                        else if (StartTIme != LastTIme)
+                        if(!ReadableResult.Any(player => string.Compare( player.Id,data.sourceID)==0))
                         {
-                            Lenght = LastTIme - StartTIme;
-                            LenghtTime = new TimeSpan(Lenght);
-                        }
-                    }
-                    catch { }
-
-                    parseModels = parseModels.Where(x => int.Parse(x.timestamp) >= LastTIme).ToList();
-
-                    foreach (var data in parseModels)
-                    {
-                        if (!ReadableResult.Any(x => (string.Compare(x.Id, data.sourceID) == 0)))
-                        {
-                            ReadableResult.Add(new ReadableResultLog
+                            var newData = new ReadableResultLog()
                             {
-                                Damage = 0,
-                                DPS = "0",
                                 Id = data.sourceID,
                                 Name = data.sourceName,
-                            });
+                                DPS = 0.0,
+                                Damage = 0,
+                                Heal = 0,
+                                NumberOfCrit = 0,
+                                NumberOfHits = 0,
+                                NumberOfJA = 0,
+                                PlayersSkill = new List<playersSkillLog>(),
+                                Start = DateTime.Now,
+                                LastHit = DateTime.Now
+                            };
+                            ReadableResult.Add(newData);
                         }
-                        if (int.Parse(data.timestamp) > LastTIme)
+                        var UpdateData = ReadableResult.Where(player => string.Compare(player.Id, data.sourceID) == 0).First();
+
+                        if (UpdateData != null)
                         {
-                            var y = ReadableResult.Where(x => x.Id == data.sourceID).First().Damage;
-                            y += int.Parse(data.damage);
-                            ReadableResult.Where(x => x.Id == data.sourceID).First().Damage = y;
+                            ReadableResult.Remove(UpdateData);
 
-                            ReadableResult.Where(x => x.Id == data.sourceID).First().DPS = (y / Lenght * 1000).ToString() + " K";
+                            if (double.Parse(data.damage) > 0)
+                            {
+                                UpdateData.Damage += double.Parse(data.damage);
+                                UpdateData.NumberOfHits += 1;
+                                if (string.Compare(data.IsCrit, "1") == 0) UpdateData.NumberOfCrit += 1;
+                                if (string.Compare(data.IsJA, "1") == 0) UpdateData.NumberOfJA += 1;
+                            }
+
+                            else UpdateData.Heal -= double.Parse(data.damage);
+
+                            ReadableResult.Add(UpdateData);
                         }
-
+                    }
+                    foreach(var data in ReadableResult)
+                    {
+                        data.LastHit = DateTime.Now;
+                        data.DPS = data.Damage / data.TimeLenght.TotalSeconds;
 
                     }
 
+                    ReadableResult = ReadableResult.OrderByDescending(x => x.Damage).ToList();
                     dataGridView1.Invoke(new Action(() => { dataGridView1.DataSource = ReadableResult; }));
 
-
-                    ReadableResult = ReadableResult.OrderByDescending(x => x.Damage).ToList();
                     var temp =
                         $"Start Time :" + StartTIme.ToString() + "\n" +
                         $"Last Time  :" + LastTIme.ToString() + "\n" +
                         $"length  :" + Lenght.ToString() + "\n" +
                         $"lenght Time  :" + LenghtTime.ToString() + "\n" +
-                        $"latest Instance  :" + latestInstance.ToString() + "\n" +
-                        $"configuration FolderPath :" + configuration.FolderPath.ToString() + "\n" +
-                        $"configuration HighLight :" + configuration.HighLight.ToString() + "\n" +
-                        $"configuration ResetTimer :" + configuration.ResetTimer.ToString() + "\n" +
-                        $"configuration ResetTrigger :" + configuration.ResetTrigger.ToString() + "\n"
-                        ;
+                        $"latest Instance  :" + LatestInstance.ToString() + "\n" +
+                        $"PosisitionIndicator  :" + PosisitionIndicator.ToString() + "\n" +
+                        $"newIndicator  :" + newIndicator.ToString() + "\n" +
+                        $"";
                     label1.Invoke(new Action(() => { label1.Text = temp; }));
+
+                    foreach (DataGridViewColumn column in dataGridView1.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.Automatic;
+                    }
+
+                    PosisitionIndicator = newIndicator;
                     Task.Delay(1000).Wait();
                 }
             }
@@ -245,7 +273,32 @@ namespace parserRead
         private void Button3_Click(object sender, EventArgs e)
         {
             StartTIme = 0;
+            PosisitionIndicator = 0;
             ReadableResult = new List<ReadableResultLog>();
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists(filetarget)) OpenFile();
+
+            List<CSVParseModel> parseModels = new List<CSVParseModel>();
+            TextReader reader;
+            File.Copy(filetarget, path, true);
+
+            using (reader = new StreamReader(path))
+            {
+                var CsvReaderP = new CsvReader(reader);
+
+                CsvReaderP.Configuration.PrepareHeaderForMatch = (string header, int index) => Regex.Replace(header, @"\s", string.Empty);
+                CsvReaderP.Read();
+                CsvReaderP.ReadHeader();
+
+                var x = CsvReaderP.GetRecords<CSVParseModel>().LongCount();
+                string a = "a";
+
+            }
+
+
         }
     }
 }
