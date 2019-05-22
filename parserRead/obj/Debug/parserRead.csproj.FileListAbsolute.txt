@@ -35,3 +35,4 @@ C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.application
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.csproj.CopyComplete
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.exe
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.pdb
+C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.csprojAssemblyReference.cache
