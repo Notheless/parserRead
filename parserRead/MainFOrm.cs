@@ -13,6 +13,8 @@ using parserRead.Model;
 using CsvHelper;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Net;
+using MoreLinq;
 
 namespace parserRead
 {
@@ -40,54 +42,10 @@ namespace parserRead
 
         private ConfigurationFile configuration;
         private List<ReadableResultLog> ReadableResult;
+        private List<SkillMappingModel> skillMap;
 
 
-        private void LoadConfig()
-        {
-            //Ignore certain enemies as target
-            IgnoreId = new List<string>()
-            {
-                "401",
-            };
 
-
-            bgrun = false;
-            ReadableResult = new List<ReadableResultLog>();
-            bool AllFilled = true;
-            if (File.Exists(CFGFILE_PATH))
-            {
-                using (TextReader textReader = new StreamReader(CFGFILE_PATH))
-                {
-                    string temp = textReader.ReadToEnd();
-                    configuration = JsonConvert.DeserializeObject<ConfigurationFile>(temp);
-                    if (configuration.ResetTimer == 0) AllFilled = false;
-
-                }
-            }
-            if (!File.Exists(CFGFILE_PATH) || !AllFilled)
-            {
-                configuration = new ConfigurationFile()
-                {
-                    FolderPath = "",
-                    HighLight = true,
-                    ResetTrigger = false,
-                    ResetTimer = 30
-                };
-
-                SaveConfig(configuration);
-            }
-        }
-
-        private void SaveConfig(ConfigurationFile configuration)
-        {
-            if (!Directory.Exists(CFGFOLDER_PATH)) Directory.CreateDirectory(CFGFOLDER_PATH);
-
-            using (TextWriter textWriter = new StreamWriter(CFGFILE_PATH))
-            {
-                string temp = JsonConvert.SerializeObject(configuration);
-                textWriter.Write(temp);
-            }
-        }
 
         public MainForm()
         {
@@ -124,6 +82,21 @@ namespace parserRead
 
         }
 
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            StartTIme = 0;
+            PosisitionIndicator = 0;
+            ReadableResult = new List<ReadableResultLog>();
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void Label1_Click(object sender, EventArgs e)
+        {
+
+        }
         private void Button2_Click(object sender, EventArgs e)
         {
             try
@@ -204,10 +177,25 @@ namespace parserRead
 
                             if (double.Parse(data.damage) > 0)
                             {
+
                                 UpdateData.Damage += double.Parse(data.damage);
                                 UpdateData.NumberOfHits += 1;
                                 if (string.Compare(data.IsCrit, "1") == 0) UpdateData.NumberOfCrit += 1;
                                 if (string.Compare(data.IsJA, "1") == 0) UpdateData.NumberOfJA += 1;
+
+                                var NamePA = skillMap.Find(x => string.Compare(x.ID, data.attackID) == 0).Kind;
+                                if (UpdateData.PlayersSkill.Any(x => string.Compare(x.Kind, NamePA) == 0)){
+                                    UpdateData.PlayersSkill.Find(x => string.Compare(x.Kind, NamePA)==0).Damage += double.Parse(data.damage);
+                                }
+                                else
+                                {
+                                    var skillPA = new playersSkillLog()
+                                    {
+                                        Damage = double.Parse(data.damage),
+                                        Kind = NamePA,
+                                    };
+                                }
+
                             }
 
                             else UpdateData.Heal -= double.Parse(data.damage);
@@ -218,12 +206,12 @@ namespace parserRead
                     foreach(var data in ReadableResult)
                     {
                         data.LastHit = DateTime.Now;
-                        data.DPS = data.Damage / data.TimeLenght.TotalSeconds;
+                        data.DPS = (data.Damage / data.TimeLenght.TotalSeconds)/1000;
 
                     }
 
                     ReadableResult = ReadableResult.OrderByDescending(x => x.Damage).ToList();
-                    dataGridView1.Invoke(new Action(() => { dataGridView1.DataSource = ReadableResult; }));
+                    dataGridView1.Invoke(new Action(() => { dataGridView1.DataSource = DataShows(); }));
 
                     var temp =
                         $"Start Time :" + StartTIme.ToString() + "\n" +
@@ -248,11 +236,29 @@ namespace parserRead
             catch { }
             return 1;
         }
-
+        private List<DataShow> DataShows()
+        {
+            var result = new List<DataShow>();
+            foreach(var data in ReadableResult)
+            {
+                var MainSkill = data.PlayersSkill.Find(x=> x.Damage == data.PlayersSkill.Max(y => y.Damage));
+                var playerData = new DataShow()
+                {
+                    Name = data.Name,
+                    Damage = (data.Damage).ToString(),
+                    Heal = data.Heal.ToString(),
+                    DPS = data.DPS.ToString() + "K",
+                    CritRate = (100 * data.NumberOfCrit / data.NumberOfHits).ToString() + "%",
+                    JARate = (100 * data.NumberOfJA / data.NumberOfHits).ToString() + "%",
+                    MainSkill = $"{MainSkill.Kind} : {MainSkill.Damage}"
+                };
+                result.Add(playerData);
+            }
+            return result;
+        }
         private void OpenFile()
         {
 
-            int size = -1;
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {
@@ -270,33 +276,77 @@ namespace parserRead
             }
         }
 
-        private void Button3_Click(object sender, EventArgs e)
+        private void SaveConfig(ConfigurationFile configuration)
         {
-            StartTIme = 0;
-            PosisitionIndicator = 0;
-            ReadableResult = new List<ReadableResultLog>();
+            if (!Directory.Exists(CFGFOLDER_PATH)) Directory.CreateDirectory(CFGFOLDER_PATH);
+
+            using (TextWriter textWriter = new StreamWriter(CFGFILE_PATH))
+            {
+                string temp = JsonConvert.SerializeObject(configuration);
+                textWriter.Write(temp);
+            }
         }
 
-        private void Button4_Click(object sender, EventArgs e)
+        private void LoadConfig()
         {
-            if (!File.Exists(filetarget)) OpenFile();
-
-            List<CSVParseModel> parseModels = new List<CSVParseModel>();
-            TextReader reader;
-            File.Copy(filetarget, path, true);
-
-            using (reader = new StreamReader(path))
+            //Ignore certain enemies as target
+            IgnoreId = new List<string>()
             {
-                var CsvReaderP = new CsvReader(reader);
+                "401",
+            };
 
-                CsvReaderP.Configuration.PrepareHeaderForMatch = (string header, int index) => Regex.Replace(header, @"\s", string.Empty);
-                CsvReaderP.Read();
-                CsvReaderP.ReadHeader();
 
-                var x = CsvReaderP.GetRecords<CSVParseModel>().LongCount();
-                string a = "a";
+            bgrun = false;
+            ReadableResult = new List<ReadableResultLog>();
+            bool AllFilled = true;
+            if (File.Exists(CFGFILE_PATH))
+            {
+                using (TextReader textReader = new StreamReader(CFGFILE_PATH))
+                {
+                    string temp = textReader.ReadToEnd();
+                    configuration = JsonConvert.DeserializeObject<ConfigurationFile>(temp);
+                    if (configuration.ResetTimer == 0) AllFilled = false;
 
+                }
             }
+            if (!File.Exists(CFGFILE_PATH) || !AllFilled)
+            {
+                configuration = new ConfigurationFile()
+                {
+                    FolderPath = "",
+                    HighLight = true,
+                    ResetTrigger = false,
+                    ResetTimer = 30
+                };
+
+                SaveConfig(configuration);
+            }
+
+            TextReader reader;
+
+            try
+            {
+                WebClient client = new WebClient();
+                Stream stream = client.OpenRead("https://raw.githubusercontent.com/VariantXYZ/PSO2ACT/master/PSO2ACT/skills.csv");
+                StreamReader webreader = new StreamReader(stream);
+                String content = webreader.ReadToEnd();
+
+                File.WriteAllText(AppContext.BaseDirectory + "skills.csv", content);
+            }
+            catch { }
+
+            if (File.Exists(AppContext.BaseDirectory + "skills.csv"))
+            {
+
+                using (reader = new StreamReader(path))
+                {
+                    var CsvReaderP = new CsvReader(reader);
+                    CsvReaderP.Read();
+                    CsvReaderP.ReadHeader();
+                    skillMap = CsvReaderP.GetRecords<SkillMappingModel>().ToList();
+                }
+            }
+            else { skillMap = new List<SkillMappingModel>(); }
 
 
         }

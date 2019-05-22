@@ -32,3 +32,7 @@ C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.Properties.Re
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.csproj.GenerateResource.cache
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.csproj.CoreCompileInputs.cache
 C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.csproj.CopyComplete
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\parserRead.exe.manifest
+C:\Users\p\Source\Repos\parserRead\parserRead\bin\Debug\parserRead.application
+C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.exe.manifest
+C:\Users\p\Source\Repos\parserRead\parserRead\obj\Debug\parserRead.application
